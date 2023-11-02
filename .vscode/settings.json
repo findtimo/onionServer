@@ -1,0 +1,9 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.tabSize": 4,
+    "editor.fontFamily": "Hack",
+    "editor.fontSize": 22,
+    "editor.formatOnSave": false
+}
