@@ -22,6 +22,7 @@ class Connector extends React.Component {
       messagesLayer1: [],
       messagesLayer2: [],
       messagesLayer3: [],
+      messagesLayer4: [],
       layer: 4,
     }
   }
@@ -55,6 +56,7 @@ class Connector extends React.Component {
           //   messages: [...this.state.messages, notif]
           // })
           this.addMessage(notif)
+          console.log(notif)
         }
       })
       this.setState({
@@ -80,19 +82,24 @@ class Connector extends React.Component {
     this.setState((prevState) => {
       const updatedMessages = [...prevState.messages, message];
       if(message.layer === 4){
-        console.log("hey");
         this.runPythonScript();
+        return {
+          messages: updatedMessages,
+          messagesLayer4: [...prevState.messagesLayer4, message],
+        };
         
       }
       if (message.layer === 3) {
+        const updatedMessagesLayer4 = prevState.messagesLayer4.filter((msg) => msg.from !== message.from);
         return {
           messages: updatedMessages,
-          messagesLayer3: [...prevState.messagesLayer3, message]
+          messagesLayer3: [...prevState.messagesLayer3, message],
+          messagesLayer4: updatedMessagesLayer4,
         };
       }
 
       if (message.layer === 2) {
-        const updatedMessagesLayer3 = prevState.messagesLayer3.filter((msg) => msg.id !== message.id);
+        const updatedMessagesLayer3 = prevState.messagesLayer3.filter((msg) => msg.from !== message.from);
         return {
           messages: updatedMessages,
           messagesLayer2: [...prevState.messagesLayer2, message],
@@ -101,7 +108,7 @@ class Connector extends React.Component {
       }
 
       if (message.layer === 1) {
-        const updatedMessagesLayer2 = prevState.messagesLayer2.filter((msg) => msg.id !== message.id);
+        const updatedMessagesLayer2 = prevState.messagesLayer2.filter((msg) => msg.from !== message.from);
         return {
           messages: updatedMessages,
           messagesLayer1: [...prevState.messagesLayer1, message],
@@ -110,7 +117,7 @@ class Connector extends React.Component {
       }
 
       if (message.layer === 0) {
-        const updatedMessagesLayer1 = prevState.messagesLayer1.filter((msg) => msg.id !== message.id);
+        const updatedMessagesLayer1 = prevState.messagesLayer1.filter((msg) => msg.from !== message.from);
         return {
           messages: updatedMessages,
           messagesLayer0: [...prevState.messagesLayer0, message],
@@ -164,6 +171,14 @@ const tableStyle = {
         </div>
         <div>
           <div style={{ display: 'flex', width: '100%' }}>
+          <div style={tableStyle}>
+              <h2>Entry</h2>
+              <table>
+                <tbody>
+                  {this.state.messagesLayer4.map(this.renderRank)}
+                </tbody>
+              </table>
+            </div>
             <div style={tableStyle}>
               <h2>Layer 3</h2>
               <table>

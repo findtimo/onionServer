@@ -8,7 +8,7 @@ app.use(express.json());
 const port = 8000; // Port of this server.js not the fking node.js 
 
 //Shit u needa touch only -- run this script to run the entire shiet. start node_server.js first manually
-let PUBLIC_IP = '192.168.68.106';
+let PUBLIC_IP = '192.168.50.179';
 
 // const server_script = spawn('python3', ['onionRouter/server.py']);
 // if (server_script.pid !== null) {
